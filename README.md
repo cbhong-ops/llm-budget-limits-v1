@@ -35,6 +35,9 @@ Compared to the reference [apigee-samples/llm-token-limits-v2](https://github.co
     -   The budget is stored as an integer multiplied by `100,000,000` in `llmTokenQuota.limit`. (i.e., $1 = 100,000,000 units)
     -   Unit prices are stored in `attributes` as `input_price_per_100M` and `output_price_per_100M`, multiplied by `100`. (e.g., entering $1.5 stores 150)
 
+-   The following screen shows budget settings by model in API Product.
+![Budget Setup UI](./images/llm-budget-ui.png)
+
 ### 2. API Proxy Behavior (`apiproxy`)
 -   **On Request**:
     -   `VA-VerifyAPIKey` verifies the client's API Key and retrieves the `llmOperationGroup` JSON data set in the API Product.
