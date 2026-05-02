@@ -75,3 +75,37 @@ Configure the `env.sh` file in the root directory with your specific values:
     *   This script uses `apigeecli` to bundle and deploy the proxy.
     *   It requires `jq` to be installed.
     *   It will automatically attempt to install `apigeecli` if it is not found in the path.
+
+---
+
+## Testing with Colab Enterprise
+
+You can use the provided Jupyter notebook to test the Apigee LLM Budget & Quota Management system. The notebook is located at `notebook/llm_budget_limits_v1.ipynb`.
+
+### Prerequisites
+- A Google Cloud Project with Vertex AI and Colab Enterprise enabled.
+- An Apigee API Proxy deployed and an API Key generated for a product that includes the proxy.
+
+### Steps to run in Colab Enterprise
+
+1.  **Access Colab Enterprise**:
+    - Go to the Google Cloud Console.
+    - Search for "Vertex AI" and navigate to the Vertex AI dashboard.
+    - In the left navigation menu, click on **Colab Enterprise**.
+
+2.  **Upload the Notebook**:
+    - Click on **Upload notebook** and select the file `notebook/llm_budget_limits_v1.ipynb` from this repository.
+
+3.  **Configure Variables**:
+    - Open the uploaded notebook.
+    - In the second code cell, update the following variables with your specific values:
+        - `PROJECT_ID`: Your Google Cloud Project ID.
+        - `LOCATION`: The region where your resources are deployed (e.g., `us-central1`).
+        - `API_ENDPOINT`: The URL of your Apigee API Proxy (e.g., `https://your-apigee-hostname/v1/samples/llm-budget-limits`).
+        - `API_KEY`: The API Key associated with the product that grants access to the proxy.
+        - `MODEL`: The model you want to test with (defaults to `gemini-2.5-flash-lite`).
+
+4.  **Run the Notebook**:
+    - Run the first cell to install the `google-genai` SDK.
+    - Run the initialization cell with your updated variables.
+    - Run the subsequent cells to execute the test scenarios. The notebook will send requests to the Apigee proxy, which will enforce the cost-based quota.
