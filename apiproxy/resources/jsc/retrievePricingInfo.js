@@ -80,9 +80,9 @@ try {
             context.setVariable("token_price_per_100M", String(totalPrice));
             
             // 디버깅을 위해 개별 토큰 카운트도 저장해두면 좋습니다 (선택 사항)
-            context.setVariable("model_attr.promptTokens", promptTokens);
-            context.setVariable("model_attr.candidatesTokens", candidatesTokens);
-            context.setVariable("model_attr.thoughtsTokens", thoughtsTokens);
+            context.setVariable("promptTokens_count", promptTokens);
+            context.setVariable("candidatesTokens_count", candidatesTokens);
+            context.setVariable("thoughtsTokens_count", thoughtsTokens);
         }
     }
 } catch (e) {
