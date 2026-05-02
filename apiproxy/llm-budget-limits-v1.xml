@@ -1,0 +1,26 @@
+<APIProxy revision="4" name="llm-budget-limits-v1">
+    <DisplayName></DisplayName>
+    <Description></Description>
+    <CreatedAt>1777718405225</CreatedAt>
+    <LastModifiedAt>1777718405225</LastModifiedAt>
+    <BasePaths>/v1/samples/llm-budget-limits</BasePaths>
+    <Policies>
+        <Policy>AM-ExtractTokenCount</Policy>
+        <Policy>DC-CollectTokenCounts</Policy>
+        <Policy>EV-ExtractRequest</Policy>
+        <Policy>LTQ-TokenCount</Policy>
+        <Policy>LTQ-TokenEnforce</Policy>
+        <Policy>VA-VerifyAPIKey</Policy>
+        <Policy>JS-retrievePricingInfo</Policy>
+    </Policies>
+    <ProxyEndpoints>
+        <ProxyEndpoint>default</ProxyEndpoint>
+    </ProxyEndpoints>
+    <Resources>
+        <Resource>properties://vertex_config.properties</Resource>
+        <Resource>jsc://retrievePricingInfo.js</Resource>
+    </Resources>
+    <TargetEndpoints>
+        <TargetEndpoint>default</TargetEndpoint>
+    </TargetEndpoints>
+</APIProxy>
