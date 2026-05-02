@@ -19,6 +19,8 @@ Compared to the reference [apigee-samples/llm-token-limits-v2](https://github.co
     -   `retrievePricingInfo.js`: Reads pricing information from the API Product and calculates the total cost by multiplying it with the response token count.
 -   `budget-ui/`: Web UI for managing LLM Operations and budgets (Python Flask)
     -   Calls Apigee APIs to manage `llmOperationGroup` in API Products.
+-   `notebook/`: Jupyter notebook for testing
+    -   `llm_budget_limits_v1.ipynb`: Test notebook designed to be run in Colab Enterprise.
 
 ---
 
