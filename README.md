@@ -56,27 +56,36 @@ Compared to the reference [apigee-samples/llm-token-limits-v2](https://github.co
 
 ## Installation and Deployment
 
-### Environment Setup
+### 1. Environment Setup
 Configure the `env.sh` file in the root directory with your specific values:
 -   `PROJECT_ID`: Your Google Cloud Project ID
 -   `UI_SERVICE_ACCOUNT`: Service account for Cloud Run
 -   `APIGEE_ENV`: Apigee environment name
 
-### UI Deployment (Cloud Run)
+### 2. API Proxy Deployment
+1.  Ensure `env.sh` is configured correctly.
+2.  Run the deployment script from the root directory: `./deploy_proxy.sh`
+    *   This script uses `apigeecli` to bundle and deploy the proxy.
+    *   It requires `jq` to be installed.
+    *   It will automatically attempt to install `apigeecli` if it is not found in the path.
+
+### 3. API Product, Developer, and Client App Setup
+1.  Create an **API Product** in Apigee. You can leave it completely empty (without adding proxies or operations) as the configuration will be completed via the UI later.
+2.  Create a **Developer**.
+3.  Create a **Client App** associated with the Developer.
+4.  Subscribe the **Client App** to the **API Product** created in step 1.
+
+### 4. UI Deployment and Configuration (Cloud Run)
 1.  Ensure `env.sh` is configured correctly.
 2.  Run the deployment script from the root directory: `./deploy_ui.sh`
     *   This script deploys the `llm-budget-ui` service to Cloud Run.
     *   It applies `--ingress all` and removes `--allow-unauthenticated`.
 3.  After successful deployment, the Cloud Run Service URL will be displayed in the terminal output.
 4.  Access the UI by opening the provided URL in your browser.
-
-
-### API Proxy Deployment
-1.  Ensure `env.sh` is configured correctly.
-2.  Run the deployment script from the root directory: `./deploy_proxy.sh`
-    *   This script uses `apigeecli` to bundle and deploy the proxy.
-    *   It requires `jq` to be installed.
-    *   It will automatically attempt to install `apigeecli` if it is not found in the path.
+5.  On the UI screen:
+    *   Enter your **Apigee Org** name.
+    *   Select the **API Product** you created in step 3.
+    *   Set the **Budget** and **Unit Costs** (Input/Output prices) for each required Model.
 
 ---
 
@@ -105,7 +114,7 @@ You can use the provided Jupyter notebook to test the Apigee LLM Budget & Quota 
         - `LOCATION`: The region where your resources are deployed (e.g., `us-central1`).
         - `API_ENDPOINT`: The URL of your Apigee API Proxy (e.g., `https://your-apigee-hostname/v1/samples/llm-budget-limits`).
         - `API_KEY`: The API Key associated with the product that grants access to the proxy.
-        - `MODEL`: The model you want to test with (defaults to `gemini-2.5-flash-lite`).
+        - `MODEL`: The model you want to test with (defaults to `gemini-2.5-flash`).
 
 4.  **Run the Notebook**:
     - Run the first cell to install the `google-genai` SDK.
