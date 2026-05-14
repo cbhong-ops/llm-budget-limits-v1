@@ -38,7 +38,7 @@ Compared to the reference [apigee-samples/llm-token-limits-v2](https://github.co
     -   Unit prices are stored in `attributes` as `input_price_per_100M` and `output_price_per_100M`, multiplied by `100`. (e.g., entering $1.5 stores 150)
 
 -   The following screen shows budget settings by model in API Product.
-![Budget Setup UI](./images/llm-budget-ui.png)
+![Budget Setup UI](./images/budget-ui-bronze.png)
 
 ### 2. API Proxy Behavior (`llm-budget-limits-v1`)
 -   **On Request**:
@@ -148,7 +148,7 @@ You can use the provided Jupyter notebook to test the Apigee LLM Budget & Quota 
     - In the second code cell, update the following variables with your specific values:
         - `PROJECT_ID`: Your Google Cloud Project ID.
         - `API_ENDPOINT`: The URL of your Apigee API Proxy (e.g., `https://your-apigee-hostname/v1/samples/llm-budget-limits`).
-            - **Note**: You can find your Apigee hostname (`your-apigee-hostname`) in the **Admin > Environments > Environment Groups** section of the Apigee Console.
+            - **Note**: You can find your Apigee hostname (`your-apigee-hostname`) in the **Management > Environments > Environment Groups** section of the Apigee Console.
 
         - `API_KEY`: The API Key associated with the product that grants access to the proxy.
         - `MODEL`: The model you want to test with (defaults to `gemini-2.5-flash`).
