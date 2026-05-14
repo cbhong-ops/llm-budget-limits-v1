@@ -79,6 +79,9 @@ SILVER_KEY=$(apigeecli apps get --name "$APP_NAME" --org "$APIGEE_ORG" --default
 
 echo "============================================================"
 echo "Deployment and Setup Completed!"
+echo "API Proxy: $PROXY_NAME"
+echo "API Products: llm-budget-bronze, llm-budget-silver"
 echo "Bronze API Key: $BRONZE_KEY"
 echo "Silver API Key: $SILVER_KEY"
 echo "============================================================"
+
