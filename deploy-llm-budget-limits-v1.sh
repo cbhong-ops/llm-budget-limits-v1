@@ -11,10 +11,13 @@ else
   exit 1
 fi
 
-if [ -z "$APIGEE_ORG" ] || [ -z "$APIGEE_ENV" ] || [ -z "$PROXY_NAME" ]; then
-  echo "Error: Please set APIGEE_ORG, APIGEE_ENV, PROXY_NAME in env.sh."
+PROXY_NAME="llm-budget-limits-v1"
+
+if [ -z "$APIGEE_ORG" ] || [ -z "$APIGEE_ENV" ]; then
+  echo "Error: Please set APIGEE_ORG, APIGEE_ENV in env.sh."
   exit 1
 fi
+
 
 echo "============================================================"
 echo "Deploying API Proxy: $PROXY_NAME"
