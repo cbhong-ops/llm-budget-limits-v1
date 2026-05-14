@@ -50,7 +50,7 @@ apigeecli apis delete --name "$PROXY_NAME" --org "$APIGEE_ORG" --default-token |
 echo "Deleting Cloud Run Service: llm-budget-ui"
 gcloud run services delete "llm-budget-ui" --region "us-central1" --project "$PROJECT_ID" --quiet || echo "Warning: Failed to delete Cloud Run service llm-budget-ui"
 
-SA_NAME="llm-budget-quota-svc-acct"
+SA_NAME="llm-budget-limits-v1-svc-acct"
 SA_EMAIL="$SA_NAME@$PROJECT_ID.iam.gserviceaccount.com"
 echo "Deleting Service Account: $SA_EMAIL"
 gcloud iam service-accounts delete "$SA_EMAIL" --project "$PROJECT_ID" --quiet || echo "Warning: Failed to delete service account $SA_EMAIL"

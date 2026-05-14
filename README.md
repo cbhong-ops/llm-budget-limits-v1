@@ -62,7 +62,7 @@ Compared to the reference [apigee-samples/llm-token-limits-v2](https://github.co
 2.  Clone this repository and navigate to the project directory:
     ```bash
     git clone <REPOSITORY_URL>
-    cd llm-budget-quota
+    cd llm-budget-limits-v1
     ```
 
 ### 2. Environment Setup
@@ -82,7 +82,7 @@ Configure the `env.sh` file in the root directory with your specific values:
 ### 4. UI Deployment and Configuration (Cloud Run)
 1.  Ensure `env.sh` is configured correctly.
 2.  Run the deployment script from the root directory: `./deploy-ui.sh`
-    *   This script creates a service account `llm-budget-quota-svc-acct` with required roles if it doesn't exist.
+    *   This script creates a service account `llm-budget-limits-v1-svc-acct` with required roles if it doesn't exist.
     *   It deploys the `llm-budget-ui` service to Cloud Run using this service account.
     *   It applies `--ingress all` and removes `--allow-unauthenticated`.
 3.  After successful deployment, the Cloud Run Service URL will be displayed in the terminal output.

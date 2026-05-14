@@ -16,7 +16,7 @@ if [ -z "$PROJECT_ID" ]; then
   exit 1
 fi
 
-SA_NAME="llm-budget-quota-svc-acct"
+SA_NAME="llm-budget-limits-v1-svc-acct"
 SA_EMAIL="$SA_NAME@$PROJECT_ID.iam.gserviceaccount.com"
 
 echo "Checking if Service Account exists: $SA_EMAIL"
