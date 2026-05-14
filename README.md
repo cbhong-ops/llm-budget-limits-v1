@@ -114,6 +114,8 @@ Compared to the reference [apigee-samples/llm-token-limits-v2](https://github.co
     *   Enter your **Apigee Org** name.
     *   Select the **API Product** you want to configure (e.g., `llm-budget-bronze` or `llm-budget-silver`).
     *   Set the **Budget** and **Unit Costs** (Input/Output prices) for each required Model.
+    *   **Note**: You can refer to the [Gemini Models Pricing Page](https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing) for the unit costs of Gemini models.
+
 
 ### Configuration Examples
 
@@ -155,8 +157,6 @@ You can use the provided Jupyter notebook to test the Apigee LLM Budget & Quota 
     - Select the notebook file you just downloaded to import it.
     - **Connect to a Runtime**: Click the **Connect** button at the top right of the notebook to connect to a runtime.
     - Run the first cell to install the `google-genai` SDK. (If an error occurs, you can ignore it and proceed.)
-
-
 
 
 3.  **Configure Variables**:
