@@ -61,19 +61,25 @@ Compared to the reference [apigee-samples/llm-token-limits-v2](https://github.co
 1.  Open **Cloud Shell** in the Google Cloud Console.
 2.  Clone this repository and navigate to the project directory:
     ```bash
-    git clone <REPOSITORY_URL>
+    git clone https://github.com/cbhong-ops/llm-budget-limits-v1.git
     cd llm-budget-limits-v1
     ```
-
 ### 2. Environment Setup
-Configure the `env.sh` file in the root directory with your specific values:
--   `PROJECT_ID`: Your Google Cloud Project ID
--   `APIGEE_ENV`: Apigee environment name
 
-After configuring the variables, run the following command to apply them to your current shell session:
-```bash
-source ./env.sh
-```
+1.  Set up Application Default Credentials (ADC) in Cloud Shell. This is required because the deployment scripts use `apigeecli` with the `--default-token` flag:
+    ```bash
+    gcloud auth application-default login
+    ```
+2.  Configure the `env.sh` file in the project root directory with your specific values:
+
+    -   `PROJECT_ID`: Your Google Cloud Project ID
+    -   `APIGEE_ENV`: Apigee environment name
+
+3.  After configuring the variables, run the following command to apply them to your current shell session:
+    ```bash
+    source ./env.sh
+    ```
+
 
 
 ### 3. API Proxy, API Product, Developer and Client App Setup
