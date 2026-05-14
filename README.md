@@ -40,6 +40,10 @@ Compared to the reference [apigee-samples/llm-token-limits-v2](https://github.co
 -   The following screen shows budget settings by model in API Product.
 ![Budget Setup UI](./images/budget-ui-bronze.png)
 
+-   And these budgets and unit prices are displayed in llmOperations as follows.
+![llmops UI](./images/llmops-bronze.png)
+
+
 ### 2. API Proxy Behavior (`llm-budget-limits-v1`)
 -   **On Request**:
     -   `VA-VerifyAPIKey` verifies the client's API Key and retrieves the `llmOperationGroup` JSON data set in the API Product.
