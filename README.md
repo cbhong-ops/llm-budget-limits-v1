@@ -149,10 +149,13 @@ You can use the provided Jupyter notebook to test the Apigee LLM Budget & Quota 
     - Search for "Vertex AI" and navigate to the Vertex AI dashboard.
     - In the left navigation menu, click on **Colab Enterprise**.
 
-2.  **Upload the Notebook**:
-    - Click on **Upload notebook** and select the file `notebook/llm_budget_limits_v1.ipynb` from this repository.
+2.  **Import the Notebook**:
+    - Download the file `notebook/llm_budget_limits_v1.ipynb` from Cloud Shell to your local machine.
+    - In the Colab Enterprise UI, click on the **Import notebooks** icon in the **Quick Actions** section.
+    - Select the notebook file you just downloaded to import it.
     - **Connect to a Runtime**: Click the **Connect** button at the top right of the notebook to connect to a runtime.
     - Run the first cell to install the `google-genai` SDK. (If an error occurs, you can ignore it and proceed.)
+
 
 
 
