@@ -16,6 +16,25 @@ if [ -z "$PROJECT_ID" ]; then
   exit 1
 fi
 
+echo "Checking required APIs..."
+ENABLED_APIS=$(gcloud services list --enabled --project="$PROJECT_ID" --format="value(config.name)")
+
+APIS=(
+  "run.googleapis.com"
+  "cloudbuild.googleapis.com"
+  "artifactregistry.googleapis.com"
+  "iam.googleapis.com"
+  "apigee.googleapis.com"
+)
+
+for api in "${APIS[@]}"; do
+  if ! echo "$ENABLED_APIS" | grep -q "$api"; then
+    echo "Enabling $api..."
+    gcloud services enable "$api" --project="$PROJECT_ID"
+  fi
+done
+
+
 SA_NAME="llm-budget-limits-v1-svc-acct"
 SA_EMAIL="$SA_NAME@$PROJECT_ID.iam.gserviceaccount.com"
 

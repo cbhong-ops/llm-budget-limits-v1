@@ -52,8 +52,11 @@ eval $DEPLOY_CMD
 
 echo "Creating API Products..."
 # Create products empty as per README, but associated with the proxy
-apigeecli products create --name llm-budget-bronze --display-name "Bronze Product" --envs "$APIGEE_ENV" --proxies "$PROXY_NAME" --approval auto --org "$APIGEE_ORG" --default-token
-apigeecli products create --name llm-budget-silver --display-name "Silver Product" --envs "$APIGEE_ENV" --proxies "$PROXY_NAME" --approval auto --org "$APIGEE_ORG" --default-token
+#apigeecli products create --name llm-budget-bronze --display-name "Bronze Product" --envs "$APIGEE_ENV" --proxies "$PROXY_NAME" --approval auto --org "$APIGEE_ORG" --default-token
+#apigeecli products create --name llm-budget-silver --display-name "Silver Product" --envs "$APIGEE_ENV" --proxies "$PROXY_NAME" --approval auto --org "$APIGEE_ORG" --default-token
+
+apigeecli products create --name llm-budget-bronze --display-name "LLM Budget Bronze" --envs "$APIGEE_ENV" --approval auto --opgrp ./product-bronze.json --org "$APIGEE_ORG" --default-token
+apigeecli products create --name llm-budget-silver --display-name "LLM Budget Silver" --envs "$APIGEE_ENV" --approval auto --opgrp ./product-silver.json --org "$APIGEE_ORG" --default-token
 
 echo "Creating Developer..."
 DEV_EMAIL="budget-dev@example.com"

@@ -32,7 +32,8 @@ APP_NAME="llm-budget-app"
 DEV_EMAIL="budget-dev@example.com"
 
 echo "Deleting Developer App: $APP_NAME"
-apigeecli apps delete --name "$APP_NAME" --org "$APIGEE_ORG" --default-token || echo "Warning: Failed to delete app $APP_NAME"
+apigeecli apps delete --name "$APP_NAME" --id "$DEV_EMAIL" --org "$APIGEE_ORG" --default-token || echo "Warning: Failed to delete app $APP_NAME"
+
 
 echo "Deleting Developer: $DEV_EMAIL"
 apigeecli developers delete --email "$DEV_EMAIL" --org "$APIGEE_ORG" --default-token || echo "Warning: Failed to delete developer $DEV_EMAIL"

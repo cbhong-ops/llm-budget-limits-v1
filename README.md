@@ -70,6 +70,12 @@ Configure the `env.sh` file in the root directory with your specific values:
 -   `PROJECT_ID`: Your Google Cloud Project ID
 -   `APIGEE_ENV`: Apigee environment name
 
+After configuring the variables, run the following command to apply them to your current shell session:
+```bash
+source ./env.sh
+```
+
+
 ### 3. API Proxy, API Product, Developer and Client App Setup
 1.  Ensure `env.sh` is configured correctly.
 2.  Run the deployment script from the root directory: `./deploy-llm-budget-limits-v1.sh`
@@ -84,15 +90,36 @@ Configure the `env.sh` file in the root directory with your specific values:
 2.  Run the deployment script from the root directory: `./deploy-ui.sh`
     *   This script creates a service account `llm-budget-limits-v1-svc-acct` with required roles if it doesn't exist.
     *   It deploys the `llm-budget-ui` service to Cloud Run using this service account.
-    *   It applies `--ingress all` and removes `--allow-unauthenticated`.
+    *   It applies `--ingress all`.
+    *   **Note**: If prompted `Allow unauthenticated invocations to [llm-budget-ui] (y/N)?`, answer `N` (unauthenticated access is not recommended for this management UI).
+
 3.  After successful deployment, the Cloud Run Service URL will be displayed in the terminal output.
 4.  In the Google Cloud Console, go to the **Cloud Run Services** menu, select the `llm-budget-ui` service, navigate to the **Security** tab, enable **Identity-Aware Proxy (IAP)**, and add authorized users to the policy.
+    *   **Note**: It may take a few minutes for the IAP configuration to take effect after enabling it. Please wait a moment before accessing the UI.
 ![Cloud Run IAP UI](./images/llm-budget-ui-iap.png)
 5.  Access the UI by opening the provided Cloud Run Service URL in your browser.
+
 6.  On the UI screen:
     *   Enter your **Apigee Org** name.
     *   Select the **API Product** you want to configure (e.g., `llm-budget-bronze` or `llm-budget-silver`).
     *   Set the **Budget** and **Unit Costs** (Input/Output prices) for each required Model.
+
+### Configuration Examples
+
+#### Example 1: llm-budget-bronze
+When you select `llm-budget-bronze` and set the values in the UI:
+![Bronze Budget Setup](./images/budget-ui-bronze.png)
+
+These settings are reflected in the `llmOperations` of the **llm-budget-bronze** API Product:
+![Bronze API Product](./images/llmops-bronze.png)
+
+#### Example 2: llm-budget-silver
+Similarly, for `llm-budget-silver`, you can configure it in the UI:
+![Silver Budget Setup](./images/budget-ui-silver.png)
+
+And it will be reflected in the **llm-budget-silver** API Product:
+![Silver API Product](./images/llmops-silver.png)
+
 
 ---
 
@@ -113,18 +140,22 @@ You can use the provided Jupyter notebook to test the Apigee LLM Budget & Quota 
 
 2.  **Upload the Notebook**:
     - Click on **Upload notebook** and select the file `notebook/llm_budget_limits_v1.ipynb` from this repository.
+    - **Connect to a Runtime**: Click the **Connect** button at the top right of the notebook to connect to a runtime.
+    - Run the first cell to install the `google-genai` SDK.
+
 
 3.  **Configure Variables**:
-    - Open the uploaded notebook.
     - In the second code cell, update the following variables with your specific values:
         - `PROJECT_ID`: Your Google Cloud Project ID.
-        - `LOCATION`: The region where your resources are deployed (e.g., `us-central1`).
         - `API_ENDPOINT`: The URL of your Apigee API Proxy (e.g., `https://your-apigee-hostname/v1/samples/llm-budget-limits`).
+            - **Note**: You can find your Apigee hostname (`your-apigee-hostname`) in the **Admin > Environments > Environment Groups** section of the Apigee Console.
+
         - `API_KEY`: The API Key associated with the product that grants access to the proxy.
         - `MODEL`: The model you want to test with (defaults to `gemini-2.5-flash`).
+            - **Note**: You must use the model that you have configured in the Web UI. In the sample setup, `gemini-2.5-flash` and `gemini-3-flash-preview` were used.
+
 
 4.  **Run the Notebook**:
-    - Run the first cell to install the `google-genai` SDK.
     - Run the initialization cell with your updated variables.
     - Run the subsequent cells to execute the test scenarios. The notebook will send requests to the Apigee proxy, which will enforce the cost-based quota.
 
