@@ -7,29 +7,29 @@
 //context.setVariable('ops_output_price', ops_output_price);
 
 
-// 1. JSON 문자열 데이터와 찾고자 하는 대상 모델명 가져오기
+// 1. Get JSON string data and the target model name to find
 var jsonString = context.getVariable("verifyapikey.VA-VerifyAPIKey.__apigee_reserved_llm_operation_configs_attribute"); 
 var targetModel = context.getVariable("target_model");
 try {
-    // JSON 문자열을 자바스크립트 객체 배열로 변환
+    // Convert JSON string to JavaScript object array
     var dataArray = JSON.parse(jsonString);
     var targetAttributes = null;
-    // 2. 전체 배열을 순회하며 조건에 맞는 모델 찾기
+    // 2. Iterate through the entire array to find the matching model
     for (var i = 0; i < dataArray.length; i++) {
         var item = dataArray[i];
         var operations = item.llmOperations;
         var isModelFound = false;
         
-        // llmOperations 배열 내부를 순회하며 model 값 비교
+        // Iterate inside the llmOperations array and compare model values
         if (operations && operations.length > 0) {
             for (var j = 0; j < operations.length; j++) {
                 if (operations[j].model === targetModel) {
                     isModelFound = true;
-                    break; // 내부 루프 탈출
+                    break; // Break inner loop
                 }
             }
         }
-        // 원하는 모델을 찾았다면 해당 item의 attributes를 저장하고 외부 루프 탈출
+        // If the desired model is found, save the item's attributes and break outer loop
         if (isModelFound) {
             targetAttributes = item.attributes;
             break; 
@@ -37,13 +37,13 @@ try {
     }
     var inputPrice = 0;
     var outputPrice = 0;
-    // 3. 찾은 attributes 배열을 읽어서 필요한 값만 Apigee 변수로 세팅하기
+    // 3. Read the found attributes array and set only required values as Apigee variables
     if (targetAttributes) {
         for (var k = 0; k < targetAttributes.length; k++) {
             var attrName = targetAttributes[k].name;
             var attrValue = targetAttributes[k].value;
             
-            // input_price_per_100M 과 output_price_per_100M 만 추출 및 로컬 변수 저장
+            // Extract only input_price_per_100M and output_price_per_100M and save to local variables
             if (attrName === 'input_price_per_100M') {
                 inputPrice = parseFloat(attrValue);
                 context.setVariable("model_attr." + attrName, attrValue);
@@ -54,14 +54,14 @@ try {
             }
         }
         
-        // 성공 여부 플래그
+        // Success flag
         context.setVariable("model_attr.found", "true");
         
     } else {
-        // 일치하는 모델이 없을 경우의 처리
+        // Handling when no matching model is found
         context.setVariable("model_attr.found", "false");
     }
-    // 4. Gemini Response에서 usageMetadata를 읽어와 가격 계산하기
+    // 4. Read usageMetadata from Gemini Response and calculate price
     var responseContent = context.getVariable("response.content");
     if (responseContent) {
         var responseJson = JSON.parse(responseContent);
@@ -70,22 +70,22 @@ try {
         if (usage) {
             var promptTokens = usage.promptTokenCount || 0;
             var candidatesTokens = usage.candidatesTokenCount || 0;
-            var thoughtsTokens = usage.thoughtsTokenCount || 0; // 생각이 필요한 모델의 경우
-            
-            // 가격 계산 (요청하신 대로 단순히 곱하여 합산합니다)
+            var thoughtsTokens = usage.thoughtsTokenCount || 0; // For models that require thinking (reasoning tokens)
+
+            // Price calculation (as requested, simply multiply and sum)
             var totalPrice = (promptTokens * inputPrice) + ((candidatesTokens + thoughtsTokens) * outputPrice);
             
-            // token_price_per_100M 이름의 flow variable에 저장
+            // Save to flow variable named token_price_per_100M
             // context.setVariable("token_price_per_100M", totalPrice);
             context.setVariable("token_price_per_100M", String(totalPrice));
             
-            // 디버깅을 위해 개별 토큰 카운트도 저장해두면 좋습니다 (선택 사항)
+            // Good to save individual token counts for debugging (optional)
             context.setVariable("promptTokens_count", promptTokens);
             context.setVariable("candidatesTokens_count", candidatesTokens);
             context.setVariable("thoughtsTokens_count", thoughtsTokens);
         }
     }
 } catch (e) {
-    // JSON 파싱 에러 방어
+    // Protect against JSON parsing errors
     context.setVariable("model_attr.error", e.message);
 }

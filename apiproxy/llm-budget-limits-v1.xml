@@ -17,7 +17,7 @@
         <ProxyEndpoint>default</ProxyEndpoint>
     </ProxyEndpoints>
     <Resources>
-        <Resource>properties://vertex_config.properties</Resource>
+       
         <Resource>jsc://retrievePricingInfo.js</Resource>
     </Resources>
     <TargetEndpoints>

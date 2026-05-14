@@ -37,6 +37,6 @@
   </PostFlow>
   <HTTPTargetConnection>
     <Properties/>
-    <URL>https://{propertyset.vertex_config.region}-aiplatform.googleapis.com</URL>
+    <URL>https://aiplatform.googleapis.com</URL>
   </HTTPTargetConnection>
 </TargetEndpoint>

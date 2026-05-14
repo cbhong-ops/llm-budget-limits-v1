@@ -26,7 +26,7 @@ Compared to the reference [apigee-samples/llm-token-limits-v2](https://github.co
 
 ## Architecture and Workflow
 
-### 1. Configuration via UI (`budget-ui`)
+### 1. Configuration via UI (`llm-budget-ui`)
 -   Users select an API Product in the UI and enter the following information for each model:
     -   **Budget**: Budget to allocate (in USD)
     -   **Interval**: Quota renewal interval
@@ -40,7 +40,7 @@ Compared to the reference [apigee-samples/llm-token-limits-v2](https://github.co
 -   The following screen shows budget settings by model in API Product.
 ![Budget Setup UI](./images/llm-budget-ui.png)
 
-### 2. API Proxy Behavior (`apiproxy`)
+### 2. API Proxy Behavior (`llm-budget-limits-v1`)
 -   **On Request**:
     -   `VA-VerifyAPIKey` verifies the client's API Key and retrieves the `llmOperationGroup` JSON data set in the API Product.
     -   `LTQ-TokenEnforce` policy checks if the current accumulated cost exceeds the budget.
@@ -56,35 +56,42 @@ Compared to the reference [apigee-samples/llm-token-limits-v2](https://github.co
 
 ## Installation and Deployment
 
-### 1. Environment Setup
+### 1. Clone the Repository
+
+1.  Open **Cloud Shell** in the Google Cloud Console.
+2.  Clone this repository and navigate to the project directory:
+    ```bash
+    git clone <REPOSITORY_URL>
+    cd llm-budget-quota
+    ```
+
+### 2. Environment Setup
 Configure the `env.sh` file in the root directory with your specific values:
 -   `PROJECT_ID`: Your Google Cloud Project ID
--   `UI_SERVICE_ACCOUNT`: Service account for Cloud Run
 -   `APIGEE_ENV`: Apigee environment name
 
-### 2. API Proxy Deployment
+### 3. API Proxy, API Product, Developer and Client App Setup
 1.  Ensure `env.sh` is configured correctly.
-2.  Run the deployment script from the root directory: `./deploy_proxy.sh`
+2.  Run the deployment script from the root directory: `./deploy-llm-budget-limits-v1.sh`
     *   This script uses `apigeecli` to bundle and deploy the proxy.
+    *   It also creates API Products (`llm-budget-bronze`, `llm-budget-silver`), a Developer, and a Client App subscribed to these products.
+    *   It outputs the API keys for the products.
     *   It requires `jq` to be installed.
     *   It will automatically attempt to install `apigeecli` if it is not found in the path.
 
-### 3. API Product, Developer, and Client App Setup
-1.  Create an **API Product** in Apigee. You can leave it completely empty (without adding proxies or operations) as the configuration will be completed via the UI later.
-2.  Create a **Developer**.
-3.  Create a **Client App** associated with the Developer.
-4.  Subscribe the **Client App** to the **API Product** created in step 1.
-
 ### 4. UI Deployment and Configuration (Cloud Run)
 1.  Ensure `env.sh` is configured correctly.
-2.  Run the deployment script from the root directory: `./deploy_ui.sh`
-    *   This script deploys the `llm-budget-ui` service to Cloud Run.
+2.  Run the deployment script from the root directory: `./deploy-ui.sh`
+    *   This script creates a service account `llm-budget-quota-svc-acct` with required roles if it doesn't exist.
+    *   It deploys the `llm-budget-ui` service to Cloud Run using this service account.
     *   It applies `--ingress all` and removes `--allow-unauthenticated`.
 3.  After successful deployment, the Cloud Run Service URL will be displayed in the terminal output.
-4.  Access the UI by opening the provided URL in your browser.
-5.  On the UI screen:
+4.  In the Google Cloud Console, go to the **Cloud Run Services** menu, select the `llm-budget-ui` service, navigate to the **Security** tab, enable **Identity-Aware Proxy (IAP)**, and add authorized users to the policy.
+![Cloud Run IAP UI](./images/llm-budget-ui-iap.png)
+5.  Access the UI by opening the provided Cloud Run Service URL in your browser.
+6.  On the UI screen:
     *   Enter your **Apigee Org** name.
-    *   Select the **API Product** you created in step 3.
+    *   Select the **API Product** you want to configure (e.g., `llm-budget-bronze` or `llm-budget-silver`).
     *   Set the **Budget** and **Unit Costs** (Input/Output prices) for each required Model.
 
 ---
@@ -120,3 +127,14 @@ You can use the provided Jupyter notebook to test the Apigee LLM Budget & Quota 
     - Run the first cell to install the `google-genai` SDK.
     - Run the initialization cell with your updated variables.
     - Run the subsequent cells to execute the test scenarios. The notebook will send requests to the Apigee proxy, which will enforce the cost-based quota.
+
+---
+
+## Clean Up
+
+To delete all resources created by this sample and avoid incurring charges:
+
+1.  Ensure `env.sh` is configured correctly.
+2.  Run the undeployment script from the root directory: `./undeploy-llm-budget-limits-v1.sh`
+    *   This script deletes the Developer App, Developer, API Products (`llm-budget-bronze`, `llm-budget-silver`), and undeploys and deletes the API Proxy.
+    *   It also deletes the Cloud Run service `llm-budget-ui` and the associated service account `llm-budget-quota-svc-acct`.
