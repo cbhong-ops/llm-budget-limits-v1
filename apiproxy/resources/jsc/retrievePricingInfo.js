@@ -61,30 +61,15 @@ try {
         // Handling when no matching model is found
         context.setVariable("model_attr.found", "false");
     }
-    // 4. Read usageMetadata from Gemini Response and calculate price
-    var responseContent = context.getVariable("response.content");
-    if (responseContent) {
-        var responseJson = JSON.parse(responseContent);
-        var usage = responseJson.usageMetadata;
-        
-        if (usage) {
-            var promptTokens = usage.promptTokenCount || 0;
-            var candidatesTokens = usage.candidatesTokenCount || 0;
-            var thoughtsTokens = usage.thoughtsTokenCount || 0; // For models that require thinking (reasoning tokens)
+    // 4. Get usageMetadata and calculate price
+    var promptTokens = Number(context.getVariable("prompt_token_count")) || 0;
+    var candidatesTokens = Number(context.getVariable("candidates_token_count")) || 0;
+    var thoughtsTokens = Number(context.getVariable("thoughts_token_count")) || 0;
 
-            // Price calculation (as requested, simply multiply and sum)
-            var totalPrice = (promptTokens * inputPrice) + ((candidatesTokens + thoughtsTokens) * outputPrice);
-            
-            // Save to flow variable named token_price_per_100M
-            // context.setVariable("token_price_per_100M", totalPrice);
-            context.setVariable("token_price_per_100M", String(totalPrice));
-            
-            // Good to save individual token counts for debugging (optional)
-            context.setVariable("promptTokens_count", promptTokens);
-            context.setVariable("candidatesTokens_count", candidatesTokens);
-            context.setVariable("thoughtsTokens_count", thoughtsTokens);
-        }
-    }
+    // Price calculation (as requested, simply multiply and sum)
+    var totalPrice = (promptTokens * inputPrice) + ((candidatesTokens + thoughtsTokens) * outputPrice);
+    context.setVariable("token_price_per_100M", String(totalPrice));
+
 } catch (e) {
     // Protect against JSON parsing errors
     context.setVariable("model_attr.error", e.message);

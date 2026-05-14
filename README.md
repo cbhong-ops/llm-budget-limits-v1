@@ -49,12 +49,13 @@ Compared to the reference [apigee-samples/llm-token-limits-v2](https://github.co
     -   `VA-VerifyAPIKey` verifies the client's API Key and retrieves the `llmOperationGroup` JSON data set in the API Product.
     -   `LTQ-TokenEnforce` policy checks if the current accumulated cost exceeds the budget.
 -   **On Response**:
+    -   `AM-ExtractTokenCount`: Reads `promptTokenCount`, `candidatesTokenCount`, and `thoughtsTokenCount` from the Gemini response's `usageMetadata`.
     -   In `retrievePricingInfo.js`:
         1.  Finds the `operationConfig` matching the called model and extracts the unit prices.
-        2.  Reads `promptTokenCount`, `candidatesTokenCount`, and `thoughtsTokenCount` from the Gemini response's `usageMetadata`.
-        3.  Calculates total cost: `(promptTokens * inputPrice) + ((candidatesTokens + thoughtsTokens) * outputPrice)`.
-        4.  The calculated cost is saved in the `token_price_per_100M` variable.
+        2.  Calculates total cost: `(promptTokens * inputPrice) + ((candidatesTokens + thoughtsTokens) * outputPrice)`.
+        3.  The calculated cost is saved in the `token_price_per_100M` variable.
     -   `LTQ-TokenCount` policy updates the quota counter using the value of `token_price_per_100M`.
+
 
 ---
 
