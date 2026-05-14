@@ -17,7 +17,6 @@
         <ProxyEndpoint>default</ProxyEndpoint>
     </ProxyEndpoints>
     <Resources>
-       
         <Resource>jsc://retrievePricingInfo.js</Resource>
     </Resources>
     <TargetEndpoints>
