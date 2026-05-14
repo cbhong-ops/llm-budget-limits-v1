@@ -152,7 +152,8 @@ You can use the provided Jupyter notebook to test the Apigee LLM Budget & Quota 
 2.  **Upload the Notebook**:
     - Click on **Upload notebook** and select the file `notebook/llm_budget_limits_v1.ipynb` from this repository.
     - **Connect to a Runtime**: Click the **Connect** button at the top right of the notebook to connect to a runtime.
-    - Run the first cell to install the `google-genai` SDK.
+    - Run the first cell to install the `google-genai` SDK. (If an error occurs, you can ignore it and proceed.)
+
 
 
 3.  **Configure Variables**:
