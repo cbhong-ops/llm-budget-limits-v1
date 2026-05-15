@@ -111,7 +111,7 @@ Compared to the reference [apigee-samples/llm-token-limits-v2](https://github.co
 5.  Access the UI by opening the provided Cloud Run Service URL in your browser.
 
 6.  On the UI screen:
-    *   Enter your **Apigee Org** name.
+    *   Enter your **Apigee Org** name (Same as your Google Cloud Project ID).
     *   Select the **API Product** you want to configure (e.g., `llm-budget-bronze` or `llm-budget-silver`).
     *   Set the **Budget** and **Unit Costs** (Input/Output prices) for each required Model.
     *   **Note**: You can refer to the [Gemini Models Pricing Page](https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing) for the unit costs of Gemini models.
