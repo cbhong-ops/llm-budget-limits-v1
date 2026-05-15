@@ -90,11 +90,9 @@ Compared to the reference [apigee-samples/llm-token-limits-v2](https://github.co
 ### 3. API Proxy, API Product, Developer and Client App Setup
 1.  Ensure `env.sh` is configured correctly.
 2.  Run the deployment script from the root directory: `./deploy-llm-budget-limits-v1.sh`
-    *   This script uses `apigeecli` to bundle and deploy the proxy.
-    *   It also creates API Products (`llm-budget-bronze`, `llm-budget-silver`), a Developer, and a Client App subscribed to these products.
-    *   It outputs the API keys for the products.
-    *   It requires `jq` to be installed.
-    *   It will automatically attempt to install `apigeecli` if it is not found in the path.
+    *   It bundles and deploys the API Proxy (`llm-budget-limits-v1`).
+    *   It creates API Products (`llm-budget-bronze`, `llm-budget-silver`), a Developer, and a Client App subscribed to these products.
+    *   It outputs the API keys for the products. **Important**: Please check the terminal output carefully and save these API keys, as you will need them for testing (e.g., in the Colab notebook).
 
 ### 4. UI Deployment and Configuration (Cloud Run)
 1.  Ensure `env.sh` is configured correctly.
@@ -141,7 +139,12 @@ And it will be reflected in the **llm-budget-silver** API Product:
 You can use the provided Jupyter notebook to test the Apigee LLM Budget & Quota Management system. The notebook is located at `notebook/llm_budget_limits_v1.ipynb`.
 
 ### Prerequisites
-- A Google Cloud Project with Vertex AI and Colab Enterprise enabled.
+- A Google Cloud Project with the following APIs enabled:
+    - **Vertex AI API** (`aiplatform.googleapis.com`)
+    - **Dataform API** (`dataform.googleapis.com`)
+    - **Compute Engine API** (`compute.googleapis.com`)
+- Billing enabled for your Google Cloud project.
+- Necessary IAM roles for users (e.g., `roles/aiplatform.colabEnterpriseUser` to create and run notebooks).
 - An Apigee API Proxy deployed and an API Key generated for a product that includes the proxy.
 
 ### Steps to run in Colab Enterprise
