@@ -25,9 +25,6 @@
       <Step>
         <Name>LTQ-TokenCount</Name>
       </Step>
-      <Step>
-        <Name>DC-CollectTokenCounts</Name>
-      </Step>
     </Response>
   </PreFlow>
   <Flows/>
