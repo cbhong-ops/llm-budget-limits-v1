@@ -45,10 +45,13 @@ if ! gcloud iam service-accounts describe "$SA_EMAIL" --project "$PROJECT_ID" &>
 fi
 
 echo "Granting roles..."
-gcloud projects add-iam-policy-binding "$PROJECT_ID" --member "serviceAccount:$SA_EMAIL" --role "roles/apigee.admin" --condition=None &>/dev/null
-gcloud projects add-iam-policy-binding "$PROJECT_ID" --member "serviceAccount:$SA_EMAIL" --role "roles/iam.serviceAccountUser" --condition=None &>/dev/null
-gcloud projects add-iam-policy-binding "$PROJECT_ID" --member "serviceAccount:$SA_EMAIL" --role "roles/serviceusage.serviceUsageConsumer" --condition=None &>/dev/null
+# gcloud projects add-iam-policy-binding "$PROJECT_ID" --member "serviceAccount:$SA_EMAIL" --role "roles/apigee.admin" --condition=None &>/dev/null
+# gcloud projects add-iam-policy-binding "$PROJECT_ID" --member "serviceAccount:$SA_EMAIL" --role "roles/iam.serviceAccountUser" --condition=None &>/dev/null
+# gcloud projects add-iam-policy-binding "$PROJECT_ID" --member "serviceAccount:$SA_EMAIL" --role "roles/serviceusage.serviceUsageConsumer" --condition=None &>/dev/null
 
+gcloud projects add-iam-policy-binding "$PROJECT_ID" --member "serviceAccount:$SA_EMAIL" --role "roles/apigee.admin" 
+gcloud projects add-iam-policy-binding "$PROJECT_ID" --member "serviceAccount:$SA_EMAIL" --role "roles/iam.serviceAccountUser" 
+gcloud projects add-iam-policy-binding "$PROJECT_ID" --member "serviceAccount:$SA_EMAIL" --role "roles/serviceusage.serviceUsageConsumer" 
 
 echo "============================================================"
 echo "Deploying llm-budget-ui to Cloud Run"
