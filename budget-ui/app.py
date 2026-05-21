@@ -6,16 +6,29 @@ import os
 
 app = Flask(__name__, static_url_path='', static_folder='static')
 
+# def get_access_token():
+#     try:
+#         credentials, project = google.auth.default(
+#             scopes=['https://www.googleapis.com/auth/cloud-platform']
+#         )
+#         credentials.refresh(Request())
+#         return credentials.token
+#     except Exception as e:
+#         print(f"Error getting access token: {e}")
+#         return None
+
 def get_access_token():
     try:
-        credentials, project = google.auth.default(
-            scopes=['https://www.googleapis.com/auth/cloud-platform']
-        )
-        credentials.refresh(Request())
-        return credentials.token
+        # Cloud Run 환경의 Metadata Server에서 직접 토큰을 가져옵니다.
+        url = "http://metadata.google.internal/computeMetadata/v1/instance/service-accounts/default/token"
+        headers = {"Metadata-Flavor": "Google"}
+        resp = requests.get(url, headers=headers)
+        resp.raise_for_status()
+        return resp.json()['access_token']
     except Exception as e:
-        print(f"Error getting access token: {e}")
+        print(f"Error getting access token from metadata server: {e}")
         return None
+
 
 @app.route('/')
 def index():
