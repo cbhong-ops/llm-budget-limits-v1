@@ -179,6 +179,28 @@ You can use the provided Jupyter notebook to test the Apigee LLM Budget & Quota 
 
 ---
 
+## Testing with Colab (Standard)
+
+If you prefer to use standard Google Colab instead of Colab Enterprise:
+
+### Steps to run in standard Colab
+
+1.  **Access Colab**:
+    - Go to [https://colab.research.google.com](https://colab.research.google.com).
+2.  **Upload the Notebook**:
+    - Download the file `notebook/llm_budget_limits_v1.ipynb` from Cloud Shell to your local machine.
+    - In Colab, select **File > Upload notebook** and choose the file you downloaded.
+3.  **Install Dependencies**:
+    - Run the first cell to install the `google-genai` SDK.
+    - **Note**: If an error occurs (e.g., dependency conflicts), you can ignore it and proceed.
+4.  **Execute Authentication Cell**:
+    - Since you are not in a Google Cloud environment, you must authenticate to access Google Cloud APIs.
+    - Make sure to run the cell that contains `from google.colab import auth` and `auth.authenticate_user()` to authenticate your Google account.
+5.  **Configure Variables and Run**:
+    - Follow the same steps as in Colab Enterprise to configure variables (`PROJECT_ID`, `API_ENDPOINT`, `API_KEY`, `MODEL`) and run the notebook.
+
+---
+
 ## Clean Up
 
 To delete all resources created by this sample and avoid incurring charges:
