@@ -30,9 +30,6 @@
         <Step>
           <Name>LTQ-TokenEnforce</Name>
         </Step>
-        <Step>
-          <Name>JS-retrievePricingInfo</Name>
-        </Step>
       </Request>
       <Response>
       </Response>
